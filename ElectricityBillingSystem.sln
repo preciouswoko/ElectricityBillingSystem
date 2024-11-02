@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35208.52
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectricityBillingSystem.API", "ElectricityBillingSystem.API\ElectricityBillingSystem.API.csproj", "{789C58D0-CAE9-470A-A03A-44E310A0C8AA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectricityBillingSystem.Domain", "ElectricityBillingSystem.Domain\ElectricityBillingSystem.Domain.csproj", "{12CD4313-CFA7-44F7-AC9F-7C01C923457E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectricityBillingSystem.Infrastructure", "ElectricityBillingSystem.Infrastructure\ElectricityBillingSystem.Infrastructure.csproj", "{7A23B01A-DEC5-4267-8E0D-1774FF25A326}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElectricityBillingSystem.Application", "ElectricityBillingSystem.Application\ElectricityBillingSystem.Application.csproj", "{5E089100-FDFA-43B1-826C-E1CEF280DFA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElectricityBillingSystem.Tests", "ElectricityBillingSystem.Tests\ElectricityBillingSystem.Tests.csproj", "{AFB474D9-B9F7-40D8-ADFC-BF2E62830B19}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{789C58D0-CAE9-470A-A03A-44E310A0C8AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{789C58D0-CAE9-470A-A03A-44E310A0C8AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{789C58D0-CAE9-470A-A03A-44E310A0C8AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{789C58D0-CAE9-470A-A03A-44E310A0C8AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12CD4313-CFA7-44F7-AC9F-7C01C923457E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12CD4313-CFA7-44F7-AC9F-7C01C923457E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12CD4313-CFA7-44F7-AC9F-7C01C923457E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12CD4313-CFA7-44F7-AC9F-7C01C923457E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A23B01A-DEC5-4267-8E0D-1774FF25A326}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A23B01A-DEC5-4267-8E0D-1774FF25A326}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A23B01A-DEC5-4267-8E0D-1774FF25A326}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A23B01A-DEC5-4267-8E0D-1774FF25A326}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E089100-FDFA-43B1-826C-E1CEF280DFA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E089100-FDFA-43B1-826C-E1CEF280DFA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E089100-FDFA-43B1-826C-E1CEF280DFA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E089100-FDFA-43B1-826C-E1CEF280DFA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AFB474D9-B9F7-40D8-ADFC-BF2E62830B19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AFB474D9-B9F7-40D8-ADFC-BF2E62830B19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AFB474D9-B9F7-40D8-ADFC-BF2E62830B19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AFB474D9-B9F7-40D8-ADFC-BF2E62830B19}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EE38C52D-6A21-420F-94FD-E3C781E1F84D}
+	EndGlobalSection
+EndGlobal
