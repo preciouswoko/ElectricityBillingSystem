@@ -53,7 +53,7 @@ namespace ElectricityBillingSystem.Infrastructure.Messaging.EventHandlers
         {
             _logger.LogInformation("Processing payment completed event: {@Event}", evt);
             await _smsService.SendSmsAsync(
-                "dummy-phone",
+                evt.PhoneNumber,
                 $"Payment successful! Token: {evt.Token}"
             );
         }

@@ -14,6 +14,8 @@ namespace ElectricityBillingSystem.Domain.Models
         public BillStatus Status { get; set; }
         public string MeterNumber { get; set; }
         public string CustomerName { get; set; }
+        public string PhoneNumber { get; set; }
+
         public string ValidationReference { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? PaidAt { get; set; }

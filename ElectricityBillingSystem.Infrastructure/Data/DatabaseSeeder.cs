@@ -71,7 +71,7 @@ namespace ElectricityBillingSystem.Infrastructure.Data
                     Id = Guid.NewGuid(),
                     Name = "John Doe",
                     Email = "john.doe@example.com",
-                    PhoneNumber = "+1234567890",
+                    PhoneNumber = "+2348054980065",
                     Wallet = new Wallet
                     {
                         Balance = 500.00m
@@ -83,7 +83,7 @@ namespace ElectricityBillingSystem.Infrastructure.Data
                     Id = Guid.NewGuid(),
                     Name = "Jane Smith",
                     Email = "jane.smith@example.com",
-                    PhoneNumber = "+0987654321",
+                    PhoneNumber = "+2349029849684",
                     Wallet = new Wallet
                     {
                         Balance = 1000.00m

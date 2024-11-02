@@ -5,11 +5,13 @@ using ElectricityBillingSystem.Domain.Events;
 using ElectricityBillingSystem.Domain.Models;
 using ElectricityBillingSystem.Infrastructure.Data;
 using ElectricityBillingSystem.Infrastructure.IServices;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -23,19 +25,23 @@ namespace ElectricityBillingSystem.Application.Concrete
         private readonly ISmsService _smsService;
         private readonly IEnumerable<IElectricityProvider> _providers;
         private readonly ILogger<ElectricityService> _logger;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
 
         public ElectricityService(
             AppDbContext context,
             IEventPublisher eventPublisher,
             ISmsService smsService,
             IEnumerable<IElectricityProvider> providers,
-            ILogger<ElectricityService> logger)
+            ILogger<ElectricityService> logger,
+            IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _eventPublisher = eventPublisher;
             _smsService = smsService;
             _providers = providers;
             _logger = logger;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<(bool isValid, string customerName)> VerifyMeterAsync(string meterNumber)
@@ -67,6 +73,7 @@ namespace ElectricityBillingSystem.Application.Concrete
                 _logger.LogWarning("Invalid meter number {MeterNumber} for bill creation", request.MeterNumber);
                 throw new ArgumentException("Invalid meter number");
             }
+            var customermobile = _httpContextAccessor.HttpContext?.User.FindFirst(ClaimTypes.MobilePhone)?.Value;
 
             var bill = new Bill
             {
@@ -76,7 +83,8 @@ namespace ElectricityBillingSystem.Application.Concrete
                 MeterNumber = request.MeterNumber,
                 CustomerName = customerName,
                 ValidationReference = Guid.NewGuid().ToString("N"),
-                CreatedAt = DateTime.UtcNow
+                CreatedAt = DateTime.UtcNow,
+                PhoneNumber = customermobile.ToString()
             };
 
             _context.Bills.Add(bill);
@@ -91,11 +99,13 @@ namespace ElectricityBillingSystem.Application.Concrete
                 MeterNumber = bill.MeterNumber,
                 CustomerName = bill.CustomerName,
                 ValidationReference = bill.ValidationReference,
-                Timestamp = DateTime.UtcNow
+                Timestamp = DateTime.UtcNow,
+                PhoneNumber = customermobile.ToString()
+                
             });
 
             await _smsService.SendSmsAsync(
-                "dummy-phone",
+                customermobile.ToString(),
                 $"New bill created for {bill.Amount:C} with reference {bill.ValidationReference}"
             );
 
@@ -121,7 +131,10 @@ namespace ElectricityBillingSystem.Application.Concrete
                 throw new InvalidOperationException("Bill already paid");
             }
 
-            var wallet = await _context.Wallets.FindAsync(walletId);
+            var wallet = await _context.Wallets
+    .Include(w => w.User)
+    .FirstOrDefaultAsync(w => w.Id == walletId);
+            //var wallet = await _context.Wallets.FindAsync(walletId);
             if (wallet == null)
             {
                 _logger.LogWarning("Wallet with ID {WalletId} not found", walletId);
@@ -154,11 +167,12 @@ namespace ElectricityBillingSystem.Application.Concrete
                     WalletId = wallet.Id,
                     Amount = bill.Amount,
                     Token = token,
-                    Timestamp = DateTime.UtcNow
+                    Timestamp = DateTime.UtcNow,
+                    PhoneNumber = wallet.User.PhoneNumber
                 });
 
                 await _smsService.SendSmsAsync(
-                    "dummy-phone",
+                    wallet.User.PhoneNumber,
                     $"Payment successful! Your token is: {token}"
                 );
                 bill.Token = token;

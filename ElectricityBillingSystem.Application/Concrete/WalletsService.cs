@@ -3,6 +3,7 @@ using ElectricityBillingSystem.Domain.Events;
 using ElectricityBillingSystem.Domain.Models;
 using ElectricityBillingSystem.Infrastructure.Data;
 using ElectricityBillingSystem.Infrastructure.IServices;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -34,8 +35,10 @@ namespace ElectricityBillingSystem.Application.Concrete
         public async Task<Wallet> GetWalletByIdAsync(Guid id)
         {
             _logger.LogInformation("Retrieving wallet with ID {WalletId}", id);
-            var wallet = await _context.Wallets.FindAsync(id);
-
+            //var wallet = await _context.Wallets.FindAsync(id);
+            var wallet = await _context.Wallets
+    .Include(w => w.User)
+    .FirstOrDefaultAsync(w => w.Id == id);
             if (wallet == null)
             {
                 _logger.LogWarning("Wallet with ID {WalletId} not found", id);
@@ -86,7 +89,7 @@ namespace ElectricityBillingSystem.Application.Concrete
                 _logger.LogWarning("Wallet balance for ID {WalletId} is below threshold: {Balance}", id, wallet.Balance);
 
                 await _smsService.SendSmsAsync(
-                    "dummy-phone",
+                    wallet.User.PhoneNumber,
                     $"Low wallet balance alert! Current balance: {wallet.Balance:C}"
                 );
                 _logger.LogInformation("Low balance SMS alert sent for wallet ID {WalletId}", id);

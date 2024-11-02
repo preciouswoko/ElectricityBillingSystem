@@ -53,7 +53,7 @@ namespace ElectricityBillingSystem.Infrastructure.Messaging.EventHandlers
         {
             _logger.LogInformation("Processing bill created event: {@Event}", evt);
             await _smsService.SendSmsAsync(
-                "dummy-phone",
+               evt.PhoneNumber,
                 $"New bill created: Amount {evt.Amount:C} for meter {evt.MeterNumber}"
             );
         }

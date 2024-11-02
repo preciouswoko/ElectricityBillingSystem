@@ -77,6 +77,7 @@ namespace ElectricityBillingSystem.Application.Concrete
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.Name),
                 new Claim("WalletId", user.Wallet?.Id.ToString() ?? string.Empty), // Custom claim for Wallet ID
+                new Claim(ClaimTypes.MobilePhone, user.PhoneNumber ?? string.Empty), // Custom claim for Phone Number
                 new Claim(ClaimTypes.Email, user.Email)
             }),
                 Expires = DateTime.UtcNow.AddMinutes(double.Parse(_config["Jwt:ExpiryMinutes"])),
